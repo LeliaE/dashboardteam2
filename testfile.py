@@ -14,3 +14,7 @@ chart_data = pd.DataFrame(
 chart_data
 
 st.line_chart(chart_data)
+
+data = pd.read_csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv")
+
+print("Shape of cdata:", data.shape)
