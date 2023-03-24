@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-streamlit, pandas, matplotlib
-=======
-streamlit == 1.20
->>>>>>> 1207be60090c2ba3ca98acb35506229bb0aefacb
+streamlit == 1.20, pandas, matplotlib 
