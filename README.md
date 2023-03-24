@@ -1,7 +1,12 @@
 # DASHBOARDTEAM2 : Open Source Project
+Team Members:
+Lelia Erscoi
+Irina Delamare
 
+Project Description:
 The 3 of us are team 2 and we are working on creatting an interactive dashboard of covid cases.
 
+Overview:
 First, you will need to **Install dependencies you need for your project:**
 We are using Streamlit, a free and open-source framework to rapidly build and share beautiful machine learning and data science web apps. 
 
