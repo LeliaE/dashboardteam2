@@ -1,7 +1,6 @@
 # DASHBOARDTEAM2 : Open Source Project
 Team Members:
-Lelia Erscoi
-Irina Delamare
+Lelia Erscoi, Irina Delamare and Sakshi Sharma
 
 Project Description:
 The 3 of us are team 2 and we are working on creatting an interactive dashboard of covid cases.
