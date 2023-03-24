@@ -2,8 +2,6 @@ import streamlit as st
 st.write("# COVID-19 data")
 
 import pandas as pd
-data = pd.read_csv("Covid Data.csv")
-data.head()
 
 import matplotlib.pyplot as plt
 st.dataframe(data.head())
