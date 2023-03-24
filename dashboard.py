@@ -2,7 +2,8 @@ import streamlit as st
 st.write("# COVID-19 data")
 
 import pandas as pd
-
+url = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
+data = pd.read_csv(url, on_bad_lines = 'skip')
 import matplotlib.pyplot as plt
 
 import seaborn as sns
