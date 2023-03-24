@@ -4,7 +4,6 @@ st.write("# COVID-19 data")
 import pandas as pd
 
 import matplotlib.pyplot as plt
-st.dataframe(data.head())
 
 import seaborn as sns
 plt.style.use("dark_background")
