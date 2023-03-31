@@ -92,8 +92,8 @@ Here you will find the interactive checklist of all the stuff we implemented:
 - [ ] Peak (wave) detection is implemented for cumulative number of cases or deaths.
 
 ### Interaction
-- [ ] User can select which countries to display in the same graphic (among a predefined list of countries).
-- [ ] User can select to display Covid-19 cases or deaths.
+- [x] User can select which countries to display in the same graphic (among a predefined list of countries).
+- [x] User can select to display Covid-19 cases or deaths.
 - [ ] User can select to display the raw number, cumulative number or the 7-day rolling average.
 - [ ] User can select the time frame to display. Either with a double slider or with 2 date pickers.
 - [ ] User can select to display or not the peak detection (for cumulative numbers only).
