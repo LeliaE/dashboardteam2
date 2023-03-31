@@ -69,7 +69,7 @@ Here you will find the interactive checklist of all the stuff we implemented:
 - [ ] The README.md file contains a Software Heritage button with an active link
 - [x] The LICENSE (or LICENSE.txt) file contains a valid open-source license.
 - [x] The requirements.txt (for pip) file to install all required dependencies.
-- [ ] The AUTHORS file contains the list of authors.
+- [x] The AUTHORS file contains the list of authors.
 - [ ] The codemeta.json file is present and filled properly.
 
 ### Organization
