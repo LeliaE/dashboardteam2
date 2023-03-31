@@ -2,10 +2,13 @@
 Team Members:
 Lelia Erscoi, Irina Delamare and Sakshi Sharma
 
-Project Description:
+###Project Description:
 The 3 of us are team 2 and we are working on creatting an interactive dashboard of covid cases.
 
-Overview:
+### Data
+The COVID-19 dataset comes from the Our World in Data team from Johns Hopkins University. The data can be found at https://github.com/owid/covid-19-data/tree/master/public/data.
+
+###Overview:
 First, you will need to **Install dependencies you need for your project:**
 We are using Streamlit, a free and open-source framework to rapidly build and share beautiful machine learning and data science web apps. 
 
