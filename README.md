@@ -29,7 +29,8 @@ Then run the dashboard
 ```bash
 USER:~/Documents/git/dashboardteam2$ streamlit run dashboard.py
 ```
-You can also open the dashboard with this [link](https://leliae-dashboardteam2-dashboard-6cmp3i.streamlit.app/).
+In case of issues, you might need to reinstall dependencies in your virtual environment with the command:
+```python -m pip install -r requirements.txt``` 
 
 # Install Dependencies
 First, you will need to **Install dependencies you need for your project:**
