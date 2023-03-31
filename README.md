@@ -52,8 +52,8 @@ Here you will find the interactive checklist of all the stuff we implemented:
 - [ ] New features are implemented in branches and merged through pull requests.
 
 ### Data
-- [ ] Data file is not stored in the repo and is read on the fly with Pandas.
-- [ ] A caching mechanism is implemented to prevent downloading the file each time the user interacts with the dashboard.
+- [x] Data file is not stored in the repo and is read on the fly with Pandas.
+- [x] A caching mechanism is implemented to prevent downloading the file each time the user interacts with the dashboard.
 
 ### Visualization
 - [ ] Dashboard displays graphics of Covid-19 cases or deaths vs time for several countries.
