@@ -30,7 +30,7 @@ So, you just need to create and enter your virtual environment :
 Here you will find the interactive checklist of all the stuff we implemented:
 
 ### Metadata
-- [ ] The README.md file is present at the root of the GitHub repo and is in Markdown format.
+- [x] The README.md file is present at the root of the GitHub repo and is in Markdown format.
 - [ ] The README.md file states where the data come from (with a link to the original repo).
 - [ ] The README.md file contains guidelines to explicitly install all required dependencies for the project in a virtual environment.
 - [ ] The README.md file contains instructions on how to run the dashboard locally.
