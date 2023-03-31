@@ -15,9 +15,14 @@ st.title("COVID-19 Data")
 plt.style.use("dark_background")
 
 # Getting data
-url = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
-data = pd.read_csv(url)
+@st.cache_data  
+def get_data():
+    url = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
+    data = pd.read_csv(url)
+    return data
 
+data = get_data()
+st.dataframe(data)
 st.subheader("A Few General Facts", anchor=None)
 
 # Date info
@@ -41,7 +46,7 @@ plt.show()
 st.pyplot()
 
 
-
+st.subheader("Data Vizualizations", anchor=None)
 
 dependent_var = ['total_deaths', 'total_deaths_per_million', 'total_cases_per_million', \
                  'icu_patients_per_million','people_vaccinated_per_hundred',  \
@@ -66,6 +71,33 @@ scatterplot = alt.Chart(data).mark_circle().encode(
 
 # Display the scatterplot
 st.altair_chart(scatterplot, use_container_width=True)
+
+
+################# Data by country ##############################
+
+st.subheader("Data by Country", anchor=None)
+countries = sorted(data['location'].unique())
+selected_country = st.sidebar.selectbox('Select a country:', countries)
+
+# Filter the data for the selected country
+country_data =data[data['location'] == selected_country]
+
+# Create the chart
+chart = alt.Chart(country_data).mark_line().encode(
+    x='date:T',
+    y=alt.Y('new_cases:Q', title='New Cases' if 'new_cases' in country_data else 'New Deaths'),
+    tooltip=['date:T', 'new_cases:Q' if 'new_cases' in country_data else 'new_deaths:Q'],
+    color=alt.value('red') if 'new_cases' in country_data else alt.value('blue')
+).properties(
+    width=800,
+    height=400,
+    title=f'{selected_country} - Daily New Cases' if 'new_cases' in country_data else f'{selected_country} - Daily New Deaths'
+)
+
+# Display the chart
+st.altair_chart(chart, use_container_width=True)
+
+
 
 # Correlation
 col1, col2 = st.columns(2)
