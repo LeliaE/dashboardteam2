@@ -85,10 +85,10 @@ Here you will find the interactive checklist of all the stuff we implemented:
 - [x] A caching mechanism is implemented to prevent downloading the file each time the user interacts with the dashboard.
 
 ### Visualization
-- [ ] Dashboard displays graphics of Covid-19 cases or deaths vs time for several countries.
+- [x] Dashboard displays graphics of Covid-19 cases or deaths vs time for several countries.
 - [ ] Data are normalized with respect to the number of inhabitants per country.
 - [ ] Raw number, cumulative number and the (rolling) average number of cases or deaths could be displayed.
-- [ ] The graph has proper axis names with “Date” for the x-axis and a name updated live for the y-axis (for instance “raw cases per million”, “average deaths per million”...) 
+- [x] The graph has proper axis names with “Date” for the x-axis and a name updated live for the y-axis (for instance “raw cases per million”, “average deaths per million”...) 
 - [ ] Peak (wave) detection is implemented for cumulative number of cases or deaths.
 
 ### Interaction
