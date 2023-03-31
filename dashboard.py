@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import altair as alt
+import wordcloud
+from wordcloud import WordCloud
+
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Title
 st.title("COVID-19 Data")
@@ -14,11 +18,30 @@ plt.style.use("dark_background")
 url = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
 data = pd.read_csv(url)
 
+st.subheader("A Few General Facts", anchor=None)
 
-# Basic info
-print('Total unique continents:',len(data.continent.unique()))
-print('Total unique countries:',len(data.location.unique()))
-print('Date span:',data.date.min(),data.date.max())
+# Date info
+a = data.date.value_counts().sort_index()
+first_day = a.index[0]
+last_day = a.index[-1]
+
+st.markdown('**Date**')
+st.write(f'The first recorded date is: {first_day}')
+st.write(f'The last recorded date is: {last_day}')
+st.write(f'Date span: {data.date.min(),data.date.max()}')
+
+st.markdown('**Locations**')
+
+st.write(f'Number of locations recorded: {data.location.nunique()}')
+st.write(f'Locations:')
+wordcloud = WordCloud().generate(' '.join(data.location.unique()))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.show()
+st.pyplot()
+
+
+
 
 dependent_var = ['total_deaths', 'total_deaths_per_million', 'total_cases_per_million', \
                  'icu_patients_per_million','people_vaccinated_per_hundred',  \
