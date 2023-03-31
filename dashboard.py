@@ -1,13 +1,50 @@
 import streamlit as st
-st.write("# COVID-19 data")
-
-import pandas as pd
-url = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
-data = pd.read_csv(url, on_bad_lines = 'skip')
 import matplotlib.pyplot as plt
-
 import seaborn as sns
+import pandas as pd
+import altair as alt
+
+# Title
+st.title("COVID-19 Data")
+
+# Style
 plt.style.use("dark_background")
+
+# Getting data
+url = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
+data = pd.read_csv(url)
+
+
+# Basic info
+print('Total unique continents:',len(data.continent.unique()))
+print('Total unique countries:',len(data.location.unique()))
+print('Date span:',data.date.min(),data.date.max())
+
+dependent_var = ['total_deaths', 'total_deaths_per_million', 'total_cases_per_million', \
+                 'icu_patients_per_million','people_vaccinated_per_hundred',  \
+                'total_vaccinations','hosp_patients_per_million']
+
+independent_var = ['gdp_per_capita','population','stringency_index','population', 
+                    'population_density', 'median_age', 'aged_65_older',
+                    'aged_70_older', 'gdp_per_capita', 'extreme_poverty',
+                    'cardiovasc_death_rate', 'diabetes_prevalence', 
+                    'female_smokers','male_smokers', 'handwashing_facilities', 
+                    'hospital_beds_per_thousand','life_expectancy','continent', 'location']
+
+# Creating selectbox for x, y and color label and setting default value
+x_column = st.sidebar.selectbox('Select X axis', independent_var)
+y_column = st.sidebar.selectbox('Select Y axis', dependent_var)
+
+# Create the scatterplot using altair
+scatterplot = alt.Chart(data).mark_circle().encode(
+    x=x_column,
+    y=y_column
+).interactive()
+
+# Display the scatterplot
+st.altair_chart(scatterplot, use_container_width=True)
+
+# Correlation
 col1, col2 = st.columns(2)
 col1.write('## Correlation')
 with col1:
@@ -15,26 +52,11 @@ with col1:
     sns.heatmap(data.corr())
     st.pyplot(fig)
 
-col2.write('Many factors are at play when looking at COVID-19 outcomes. Age has been identified as a significant risk factor,\
+col2.write('                                                                                                                         \
+            Many factors are at play when looking at COVID-19 outcomes. Age has been identified as a significant risk factor,\
             with older adults more likely to require hospitalization and experience more severe illness. Similarly, underlying health \
-            conditions such as diabetes, obesity, and cardiovascular disease have been associated with worse outcomes. Other factors, s \
-            uch as sex and pregnancy, may also play a role in disease severity and require special consideration in clinical management.  \
+            conditions such as diabetes, obesity, and cardiovascular disease have been associated with worse outcomes. Other factors,  \
+            such as sex and pregnancy, may also play a role in disease severity and require special consideration in clinical management.  \
             The presence of pneumonia, intubation, and ICU admission are all markers of more severe disease and can indicate a higher risk of mortality.')
 
-col1, col2 = st.columns(2)
 
-col1.write('Older people are more likely to end up in ICU because of COVID-19 due to their weakened immune systems and higher likelihood \
-           of having pre-existing health conditions. As people age, their immune systems become less efficient in fighting off infections, \
-           making them more vulnerable to severe illness from COVID-19. Additionally, older adults are more likely to have underlying health \
-           conditions such as cardiovascular disease, diabetes, and chronic respiratory diseases that can make COVID-19 more severe. \
-           These factors increase the likelihood of hospitalization and ICU admission for older adults with COVID-19.')
-
-col2.write('## Correlation')
-with col2:
-    fig, ax = plt.subplots()
-    sns.histplot(data=data, x="AGE", color="skyblue", label="ICU", kde=True)
-    sns.histplot(data=data, x="AGE", color="red", label="ICU", kde=True)
-
-    plt.legend() 
-    plt.show()
-    st.pyplot(fig)
