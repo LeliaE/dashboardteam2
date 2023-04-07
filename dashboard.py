@@ -1,3 +1,4 @@
+# Importing dependencies
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -9,20 +10,33 @@ from wordcloud import WordCloud
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Title
-st.title("COVID-19 Data")
+st.title("COVID-19 Data dashboard")
 
 # Style
 plt.style.use("dark_background")
 
+
 # Getting data
 @st.cache_data  
 def get_data():
+
+    st.write("Getting data")
+
+    # URL from where we get the data
     url = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
+
+    # Load data
     data = pd.read_csv(url)
+    data["date"] = pd.to_datetime(data["date"])
+    
+    st.dataframe(data)
+
     return data
 
+# Calling get_data function
 data = get_data()
-st.dataframe(data)
+
+
 st.subheader("A Few General Facts", anchor=None)
 
 # Date info
@@ -39,13 +53,9 @@ with col1:
     st.markdown('**Locations**')
     st.write(f'Number of locations recorded: {data.location.nunique()}')
 
-with col2:
-    st.write(f'Locations:')
-    wordcloud = WordCloud().generate(' '.join(data.location.unique()))
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.show()
-    st.pyplot()
+'with col2:
+'''  st.write(f'Locations: how many location has been implemented')'''
+
 
 
 dependent_var = ['total_deaths', 'total_deaths_per_million', 'total_cases_per_million', \
@@ -77,7 +87,27 @@ independent_var = ['gdp_per_capita','population','stringency_index','population'
 
 st.subheader("Data by Country", anchor=None)
 # Create a sidebar with a list of countries and a radio button to choose between new cases and new deaths
-countries = sorted(data['location'].unique())
+'countries = sorted(data['location'].unique())
+
+
+def get_countries(data):
+    
+    st.write("Getting countries list")
+    
+    # Create countries list
+    countries = list(sorted(data['location'].unique()))
+
+    # Removing errors from countries list
+    notCountries = ['High income', 'Low income', 'Lower middle income', 'Upper middle income', 'World', 'International', 'Africa', 'Asia', 'Central African Republic', 'Europe', 'European Union', 'North America', 'Oceania', 'South Africa', 'South America']
+    
+    for i in notCountries:
+        countries.remove(i)
+
+    return countries
+
+countries = get_countries(data)
+
+
 selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India'])
 new_cases_or_deaths = st.sidebar.radio('Choose between new cases or new deaths:', ['new_cases', 'new_deaths'])
 
@@ -98,21 +128,5 @@ chart = alt.Chart(country_data).mark_line().encode(
 # Display the chart
 st.altair_chart(chart, use_container_width=True)
 
-
-
-# Correlation
-col1, col2 = st.columns(2)
-col1.write('## Correlation')
-with col1:
-    fig, ax = plt.subplots()
-    sns.heatmap(data.corr())
-    st.pyplot(fig)
-
-col2.write('                                                                                                                         \
-            Many factors are at play when looking at COVID-19 outcomes. Age has been identified as a significant risk factor,\
-            with older adults more likely to require hospitalization and experience more severe illness. Similarly, underlying health \
-            conditions such as diabetes, obesity, and cardiovascular disease have been associated with worse outcomes. Other factors,  \
-            such as sex and pregnancy, may also play a role in disease severity and require special consideration in clinical management.  \
-            The presence of pneumonia, intubation, and ICU admission are all markers of more severe disease and can indicate a higher risk of mortality.')
 
 
