@@ -33,8 +33,41 @@ def get_data():
 
     return data
 
+
+
+# Getting countries list
+@st.cache_data
+def get_countries(data):
+    
+    st.write("Getting countries list")
+    
+    # Create countries list
+    countries = list(sorted(data['location'].unique()))
+
+    # Removing errors from countries list
+    notCountries = ['High income', 'Low income', 'Lower middle income', 'Upper middle income', 'World', 'Africa', 'Asia', 'Europe', 'European Union', 'North America', 'Oceania', 'South Africa', 'South America']
+    
+    for i in notCountries:
+        countries.remove(i)
+
+    return countries
+
+
+
+
+
 # Calling get_data function
 data = get_data()
+
+
+a=sorted(data['location'].unique())
+
+
+st.write(a)
+
+
+countries = get_countries(data)
+
 
 
 st.subheader("A Few General Facts", anchor=None)
@@ -53,8 +86,8 @@ with col1:
     st.markdown('**Locations**')
     st.write(f'Number of locations recorded: {data.location.nunique()}')
 
-'with col2:
-'''  st.write(f'Locations: how many location has been implemented')'''
+#with col2:
+#  st.write(f'Locations: how many location has been implemented')
 
 
 
@@ -87,42 +120,35 @@ independent_var = ['gdp_per_capita','population','stringency_index','population'
 
 st.subheader("Data by Country", anchor=None)
 # Create a sidebar with a list of countries and a radio button to choose between new cases and new deaths
-'countries = sorted(data['location'].unique())
+#countries = sorted(data['location'].unique())
 
 
-def get_countries(data):
-    
-    st.write("Getting countries list")
-    
-    # Create countries list
-    countries = list(sorted(data['location'].unique()))
 
-    # Removing errors from countries list
-    notCountries = ['High income', 'Low income', 'Lower middle income', 'Upper middle income', 'World', 'International', 'Africa', 'Asia', 'Central African Republic', 'Europe', 'European Union', 'North America', 'Oceania', 'South Africa', 'South America']
-    
-    for i in notCountries:
-        countries.remove(i)
-
-    return countries
-
-countries = get_countries(data)
+# Streamlit sidebar
+st.sidebar.image('https://institutducerveau-icm.org/wp-content/uploads/2020/10/coronavirus-covid-19-e1603461789898-830x483.jpg', width=300)
 
 
-selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India'])
-new_cases_or_deaths = st.sidebar.radio('Choose between new cases or new deaths:', ['new_cases', 'new_deaths'])
+visualisation_type = {'total_cases_per_million': 'Total confirmed cases of COVID-19 per 1,000,000 people', 'new_cases_per_million': 'New confirmed cases of COVID-19 per 1,000,000 people', 'new_cases_smoothed_per_million': 'New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people', 'total_deaths_per_million': 'Total deaths attributed to COVID-19 per 1,000,000 people', 'new_deaths_per_million': 'New deaths attributed to COVID-19 per 1,000,000 people', 'new_deaths_smoothed_per_million': 'New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people'}
+
+
+selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India', 'France'])
+#selected_dates = st.sidebar.multiselect('Select dates:', date, default=['United States', 'India'])
+select_dashboard_type = st.sidebar.radio('Choose What type of visualisation you want for the dashboard :', visualisation_type.keys())   
+
+selected_type = visualisation_type[select_dashboard_type]
 
 # Filter the data for the selected country and the chosen variable
-country_data = data[data['location'].isin(selected_countries)][['location', 'date', new_cases_or_deaths]].dropna()
+country_data = data[data['location'].isin(selected_countries)][['location', 'date', select_dashboard_type]].dropna()
 
 # Create the chart
 chart = alt.Chart(country_data).mark_line().encode(
     x='date:T',
-    y=alt.Y(f'{new_cases_or_deaths}:Q', title='New Cases' if new_cases_or_deaths == 'new_cases' else 'New Deaths'),
+    y=alt.Y(f'{select_dashboard_type}:Q', title='New Cases' if select_dashboard_type == 'new_cases' else 'New Deaths'),
     color='location:N'
 ).properties(
     width=800,
     height=400,
-    title=f'Daily {new_cases_or_deaths.capitalize()} for {", ".join(selected_countries)}'
+    title=f'Daily {select_dashboard_type.capitalize()} for {", ".join(selected_countries)}'
 )
 
 # Display the chart
