@@ -20,8 +20,6 @@ plt.style.use("dark_background")
 @st.cache_data  
 def get_data():
 
-    st.write("Getting data")
-
     # URL from where we get the data
     url = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
 
@@ -38,8 +36,6 @@ def get_data():
 # Getting countries list
 @st.cache_data
 def get_countries(data):
-    
-    st.write("Getting countries list")
     
     # Create countries list
     countries = list(sorted(data['location'].unique()))
@@ -58,14 +54,6 @@ def get_countries(data):
 
 # Calling get_data function
 data = get_data()
-
-
-a=sorted(data['location'].unique())
-
-
-st.write(a)
-
-
 countries = get_countries(data)
 
 
@@ -128,27 +116,40 @@ st.subheader("Data by Country", anchor=None)
 st.sidebar.image('https://institutducerveau-icm.org/wp-content/uploads/2020/10/coronavirus-covid-19-e1603461789898-830x483.jpg', width=300)
 
 
-visualisation_type = {'total_cases_per_million': 'Total confirmed cases of COVID-19 per 1,000,000 people', 'new_cases_per_million': 'New confirmed cases of COVID-19 per 1,000,000 people', 'new_cases_smoothed_per_million': 'New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people', 'total_deaths_per_million': 'Total deaths attributed to COVID-19 per 1,000,000 people', 'new_deaths_per_million': 'New deaths attributed to COVID-19 per 1,000,000 people', 'new_deaths_smoothed_per_million': 'New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people'}
+visualisation_type = {'Total confirmed cases of COVID-19 per 1,000,000 people': 'total_cases_per_million', 'New confirmed cases of COVID-19 per 1,000,000 people': 'new_cases_per_million', 'New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people': 'new_cases_smoothed_per_million', 'Total deaths attributed to COVID-19 per 1,000,000 people': 'total_deaths_per_million', 'New deaths attributed to COVID-19 per 1,000,000 people': 'new_deaths_per_million', 'New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people': 'new_deaths_smoothed_per_million'}
 
 
 selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India', 'France'])
+
+
 #selected_dates = st.sidebar.multiselect('Select dates:', date, default=['United States', 'India'])
+
+
+
+
+
+
+
 select_dashboard_type = st.sidebar.radio('Choose What type of visualisation you want for the dashboard :', visualisation_type.keys())   
 
 selected_type = visualisation_type[select_dashboard_type]
 
 # Filter the data for the selected country and the chosen variable
-country_data = data[data['location'].isin(selected_countries)][['location', 'date', select_dashboard_type]].dropna()
+country_data = data[data['location'].isin(selected_countries)][['location', 'date', selected_type]].dropna()
+
+
+
+
 
 # Create the chart
 chart = alt.Chart(country_data).mark_line().encode(
     x='date:T',
-    y=alt.Y(f'{select_dashboard_type}:Q', title='New Cases' if select_dashboard_type == 'new_cases' else 'New Deaths'),
+    y=alt.Y(f'{selected_type}:Q', title='New Cases' if selected_type == 'new_cases' else 'New Deaths'),
     color='location:N'
 ).properties(
     width=800,
     height=400,
-    title=f'Daily {select_dashboard_type.capitalize()} for {", ".join(selected_countries)}'
+    title=f'Daily {selected_type .capitalize()} for {", ".join(selected_countries)}'
 )
 
 # Display the chart
