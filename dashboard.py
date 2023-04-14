@@ -110,35 +110,28 @@ st.subheader("Data by Country", anchor=None)
 # Create a sidebar with a list of countries and a radio button to choose between new cases and new deaths
 #countries = sorted(data['location'].unique())
 
-
-
 # Streamlit sidebar
 st.sidebar.image('https://institutducerveau-icm.org/wp-content/uploads/2020/10/coronavirus-covid-19-e1603461789898-830x483.jpg', width=300)
 
 
-visualisation_type = {'Total confirmed cases of COVID-19 per 1,000,000 people': 'total_cases_per_million', 'New confirmed cases of COVID-19 per 1,000,000 people': 'new_cases_per_million', 'New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people': 'new_cases_smoothed_per_million', 'Total deaths attributed to COVID-19 per 1,000,000 people': 'total_deaths_per_million', 'New deaths attributed to COVID-19 per 1,000,000 people': 'new_deaths_per_million', 'New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people': 'new_deaths_smoothed_per_million'}
+visualisation_type = {'Total confirmed cases of COVID-19 per 1,000,000 people': 'total_cases_per_million', 
+                    'New confirmed cases of COVID-19 per 1,000,000 people': 'new_cases_per_million', 
+                    'New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people': 'new_cases_smoothed_per_million', 
+                    'Total deaths attributed to COVID-19 per 1,000,000 people': 'total_deaths_per_million', 
+                    'New deaths attributed to COVID-19 per 1,000,000 people': 'new_deaths_per_million', 
+                    'New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people': 'new_deaths_smoothed_per_million'}
 
-
-selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India', 'France'])
-
-
-#selected_dates = st.sidebar.multiselect('Select dates:', date, default=['United States', 'India'])
-
-
-
-
-
-
-
+# Selecting dashboard type
 select_dashboard_type = st.sidebar.radio('Choose What type of visualisation you want for the dashboard :', visualisation_type.keys())   
-
 selected_type = visualisation_type[select_dashboard_type]
 
-# Filter the data for the selected country and the chosen variable
+# Selecting date
+selected_dates = st.sidebar.date_input('Select dates:', [])
+st.write('Selected dates:', selected_dates)
+
+# Selecting countries
+selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India', 'France'])
 country_data = data[data['location'].isin(selected_countries)][['location', 'date', selected_type]].dropna()
-
-
-
 
 
 # Create the chart
