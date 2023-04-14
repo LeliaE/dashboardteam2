@@ -2,7 +2,7 @@
 Team Members:
 Lelia Erscoi, Irina Delamare and Sakshi Sharma
 
-###Project Description:
+### Project Description:
 The 3 of us form team 2 and we are working on creatting an interactive dashboard of covid19 casualties using streamlit for our OpenSource course.
 
 You can check our dashboard with this [link](https://leliae-dashboardteam2-dashboard-6cmp3i.streamlit.app/).
