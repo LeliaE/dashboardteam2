@@ -8,7 +8,7 @@ Here you will find the interactive checklist of all the stuff we implemented:
 - [ ] The README.md file contains guidelines to explicitly install all required dependencies for the project in a virtual environment.
 - [x] The README.md file contains instructions on how to run the dashboard locally.
 - [x] The README.md file contains a link to Streamlit Cloud.
-- [ ] The README.md file contains a Software Heritage button with an active link
+- [x] The README.md file contains a Software Heritage button with an active link
 - [x] The LICENSE (or LICENSE.txt) file contains a valid open-source license.
 - [x] The requirements.txt (for pip) file to install all required dependencies.
 - [x] The AUTHORS file contains the list of authors.
