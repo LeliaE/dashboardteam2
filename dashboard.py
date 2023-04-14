@@ -6,15 +6,14 @@ import pandas as pd
 import altair as alt
 import wordcloud
 from wordcloud import WordCloud
-
-st.set_option('deprecation.showPyplotGlobalUse', False)
+import numpy as np
 
 # Title
 st.title("COVID-19 Data dashboard")
 
 # Style
 plt.style.use("dark_background")
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Getting data
 @st.cache_data  
@@ -27,11 +26,9 @@ def get_data():
     data = pd.read_csv(url)
     data["date"] = pd.to_datetime(data["date"])
     
-    st.dataframe(data)
+    #st.dataframe(data)
 
     return data
-
-
 
 # Getting countries list
 @st.cache_data
@@ -41,21 +38,18 @@ def get_countries(data):
     countries = list(sorted(data['location'].unique()))
 
     # Removing errors from countries list
-    notCountries = ['High income', 'Low income', 'Lower middle income', 'Upper middle income', 'World', 'Africa', 'Asia', 'Europe', 'European Union', 'North America', 'Oceania', 'South Africa', 'South America']
+    notCountries = ['High income', 'Low income', 'Lower middle income', 
+                    'Upper middle income', 'World', 'Africa', 'Asia', 'Europe', 
+                    'European Union', 'North America', 'Oceania', 'South Africa', 'South America']
     
     for i in notCountries:
         countries.remove(i)
 
     return countries
 
-
-
-
-
 # Calling get_data function
 data = get_data()
 countries = get_countries(data)
-
 
 
 st.subheader("A Few General Facts", anchor=None)
@@ -110,36 +104,49 @@ st.subheader("Data by Country", anchor=None)
 # Create a sidebar with a list of countries and a radio button to choose between new cases and new deaths
 #countries = sorted(data['location'].unique())
 
-
-
 # Streamlit sidebar
 st.sidebar.image('https://institutducerveau-icm.org/wp-content/uploads/2020/10/coronavirus-covid-19-e1603461789898-830x483.jpg', width=300)
 
 
-visualisation_type = {'Total confirmed cases of COVID-19 per 1,000,000 people': 'total_cases_per_million', 'New confirmed cases of COVID-19 per 1,000,000 people': 'new_cases_per_million', 'New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people': 'new_cases_smoothed_per_million', 'Total deaths attributed to COVID-19 per 1,000,000 people': 'total_deaths_per_million', 'New deaths attributed to COVID-19 per 1,000,000 people': 'new_deaths_per_million', 'New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people': 'new_deaths_smoothed_per_million'}
+visualisation_type = {'Total confirmed cases of COVID-19 per 1,000,000 people': 'total_cases_per_million', 
+                    'New confirmed cases of COVID-19 per 1,000,000 people': 'new_cases_per_million', 
+                    'New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people': 'new_cases_smoothed_per_million', 
+                    'Total deaths attributed to COVID-19 per 1,000,000 people': 'total_deaths_per_million', 
+                    'New deaths attributed to COVID-19 per 1,000,000 people': 'new_deaths_per_million', 
+                    'New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people': 'new_deaths_smoothed_per_million'}
 
-
-selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India', 'France'])
-
-
-#selected_dates = st.sidebar.multiselect('Select dates:', date, default=['United States', 'India'])
-
-
-
-
-
-
-
+# Selecting dashboard type
 select_dashboard_type = st.sidebar.radio('Choose What type of visualisation you want for the dashboard :', visualisation_type.keys())   
-
 selected_type = visualisation_type[select_dashboard_type]
 
-# Filter the data for the selected country and the chosen variable
-country_data = data[data['location'].isin(selected_countries)][['location', 'date', selected_type]].dropna()
+# Selecting date
+selected_dates = st.sidebar.date_input('Select dates:', [pd.to_datetime('2020-01-01'), pd.to_datetime('today')])
+
+# Check if only one date was selected
+if isinstance(selected_dates, tuple):
+    start_date= selected_dates[0]
+    try: 
+        end_date = selected_dates[1]
+    except:
+        "Date selection error. Choose 2 dates."
+        end_date = start_date
+else:
+    start_date, end_date = selected_dates, pd.to_datetime('today')
 
 
+# Convert start_date and end_date to numpy.datetime64[ns]
+start_date = np.datetime64(start_date)
+end_date = np.datetime64(end_date)
+st.write('Selected dates:', start_date, end_date)
 
 
+# Selecting countries
+selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India', 'France'])
+#country_data = data[data['location'].isin(selected_countries)]
+#country_data = data[(data['location'].isin(selected_countries))][['location', 'date', selected_type]].dropna()
+
+# Selecting countries
+country_data = data.loc[(data['location'].isin(selected_countries)) & (data['date'] >= start_date) & (data['date'] <= end_date), ['location', 'date', selected_type]].dropna()
 
 # Create the chart
 chart = alt.Chart(country_data).mark_line().encode(
