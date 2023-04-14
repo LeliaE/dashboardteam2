@@ -1,4 +1,8 @@
 # DASHBOARDTEAM2 : Open Source Project
+
+[![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:830bc682c58fc7d5158d6cd0153bcfaad4ef5b4c/)](https://archive.softwareheritage.org/swh:1:dir:830bc682c58fc7d5158d6cd0153bcfaad4ef5b4c;origin=https://github.com/LeliaE/dashboardteam2;visit=swh:1:snp:22e01c878777317a9c17341f1e92cec7de72bb45;anchor=swh:1:rev:90c84fd309cd250d5547a303e9b8049b275c544c)
+
+
 Team Members:
 Lelia Erscoi, Irina Delamare and Sakshi Sharma
 
