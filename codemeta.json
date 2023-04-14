@@ -1,0 +1,41 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/0BSD",
+    "codeRepository": "https://github.com/LeliaE/dashboardteam2",
+    "dateCreated": "2023-03-24",
+    "datePublished": "2023-04-14",
+    "name": "DASHBOARDTEAM2 : Open Source Project",
+    "description": "The 3 of us form team 2 and we are working on creating an interactive dashboard of covid19 casualties using Streamlit for our OpenSource course.",
+    "applicationCategory": "data science",
+    "keywords": [
+        "covid19",
+        "pandemy"
+    ],
+    "programmingLanguage": [
+        "Python 3"
+    ],
+    "softwareRequirements": [
+        "Python 3, virtual environment"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "givenName": "Irina",
+            "familyName": "Delamare",
+            "email": "irina.delamare@cri-paris.org"
+        },
+        {
+            "@type": "Person",
+            "givenName": "Lelia  ",
+            "familyName": "Erscoi",
+            "email": "lelia.erscoi@cri-paris.org"
+        },
+        {
+            "@type": "Person",
+            "givenName": "Sakshi ",
+            "familyName": "Sharma ",
+            "email": "email@acdc.com"
+        }
+    ]
+}
