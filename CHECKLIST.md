@@ -12,7 +12,7 @@ Here you will find the interactive checklist of all the stuff we implemented:
 - [x] The LICENSE (or LICENSE.txt) file contains a valid open-source license.
 - [x] The requirements.txt (for pip) file to install all required dependencies.
 - [x] The AUTHORS file contains the list of authors.
-- [ ] The codemeta.json file is present and filled properly.
+- [x] The codemeta.json file is present and filled properly.
 
 ### Organization
 - [ ] Issues are created to list expected features and report bugs.
@@ -27,14 +27,14 @@ Here you will find the interactive checklist of all the stuff we implemented:
 
 ### Visualization
 - [x] Dashboard displays graphics of Covid-19 cases or deaths vs time for several countries.
-- [ ] Data are normalized with respect to the number of inhabitants per country.
-- [ ] Raw number, cumulative number and the (rolling) average number of cases or deaths could be displayed.
+- [x] Data are normalized with respect to the number of inhabitants per country.
+- [x] Raw number, cumulative number and the (rolling) average number of cases or deaths could be displayed.
 - [x] The graph has proper axis names with “Date” for the x-axis and a name updated live for the y-axis (for instance “raw cases per million”, “average deaths per million”...) 
 - [ ] Peak (wave) detection is implemented for cumulative number of cases or deaths.
 
 ### Interaction
 - [x] User can select which countries to display in the same graphic (among a predefined list of countries).
 - [x] User can select to display Covid-19 cases or deaths.
-- [ ] User can select to display the raw number, cumulative number or the 7-day rolling average.
-- [ ] User can select the time frame to display. Either with a double slider or with 2 date pickers.
+- [x] User can select to display the raw number, cumulative number or the 7-day rolling average.
+- [x] User can select the time frame to display. Either with a double slider or with 2 date pickers.
 - [ ] User can select to display or not the peak detection (for cumulative numbers only).
