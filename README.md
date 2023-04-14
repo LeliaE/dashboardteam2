@@ -57,3 +57,5 @@ So, you just need to create and enter your virtual environment :
 ## FOR WINDOWS USERS
 *to add* 
 
+## SUMMARY 
+We have created an interactive dashboard of COVID-19 casualties using Streamlit for our Open Source course. The data used in the dashboard is from the Our World in Data team from Johns Hopkins University. To run the dashboard locally, the user needs to install the dependencies and activate the virtual environment. The project's dependencies are stored in the requirements.txt file, and they can be installed using the pip command.
