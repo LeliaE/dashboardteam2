@@ -7,6 +7,8 @@ import altair as alt
 import wordcloud
 from wordcloud import WordCloud
 import numpy as np
+from scipy.signal import find_peaks
+from scipy import signal
 
 # Title
 st.title("COVID-19 Data dashboard")
@@ -72,32 +74,6 @@ with col1:
 #  st.write(f'Locations: how many location has been implemented')
 
 
-
-dependent_var = ['total_deaths', 'total_deaths_per_million', 'total_cases_per_million', \
-                 'icu_patients_per_million','people_vaccinated_per_hundred',  \
-                'total_vaccinations','hosp_patients_per_million']
-
-independent_var = ['gdp_per_capita','population','stringency_index','population', 
-                    'population_density', 'median_age', 'aged_65_older',
-                    'aged_70_older', 'gdp_per_capita', 'extreme_poverty',
-                    'cardiovasc_death_rate', 'diabetes_prevalence', 
-                    'female_smokers','male_smokers', 'handwashing_facilities', 
-                    'hospital_beds_per_thousand','life_expectancy','continent', 'location']
-
-# Creating selectbox for x, y and color label and setting default value
-#x_column = st.sidebar.selectbox('Select X axis', independent_var)
-#y_column = st.sidebar.selectbox('Select Y axis', dependent_var)
-
-#Create the scatterplot using altair
-#scatterplot = alt.Chart(data).mark_circle().encode(
-#    x=x_column,
-#    y=y_column
-#).interactive()
-
-# Display the scatterplot
-#st.altair_chart(scatterplot, use_container_width=True)
-
-
 ################# Data by country ##############################
 
 st.subheader("Data by Country", anchor=None)
@@ -119,7 +95,7 @@ visualisation_type = {'Total confirmed cases of COVID-19 per 1,000,000 people': 
 select_dashboard_type = st.sidebar.radio('Choose What type of visualisation you want for the dashboard :', visualisation_type.keys())   
 selected_type = visualisation_type[select_dashboard_type]
 
-# Selecting date
+###################### DATE ########################################
 selected_dates = st.sidebar.date_input('Select dates:', [pd.to_datetime('2020-01-01'), pd.to_datetime('today')])
 
 # Check if only one date was selected
@@ -134,25 +110,12 @@ else:
     start_date, end_date = selected_dates, pd.to_datetime('today')
 
 
-
-
-
-
-peak_detection = st.sidebar.checkbox('Show peak detection example')
-#if peak_detection:
-
-
-
-
-
-
-
-
 # Convert start_date and end_date to numpy.datetime64[ns]
 start_date = np.datetime64(start_date)
 end_date = np.datetime64(end_date)
 st.write('Selected dates:', start_date, end_date)
 
+###################################################################
 
 # Selecting countries
 selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India', 'France'])
@@ -162,6 +125,15 @@ selected_countries = st.sidebar.multiselect('Select countries:', countries, defa
 # Selecting countries
 country_data = data.loc[(data['location'].isin(selected_countries)) & (data['date'] >= start_date) & (data['date'] <= end_date), ['location', 'date', selected_type]].dropna()
 
+
+
+############################ PEAK DETECTION ##########################################################
+def detect_peaks(x):
+
+    peaks, peak_properties = signal.find_peaks(x, prominence=-0.5, distance=50)
+    return peaks
+
+######################################################################################################
 
 
 def choose_name(select_type):
@@ -188,10 +160,40 @@ chart = alt.Chart(country_data).mark_line().encode(
 ).properties(
     width=800,
     height=400,
-    title=f'Daily {selected_type .capitalize()} for {", ".join(selected_countries)}'
+    title=f'Daily {selected_type.capitalize()} for {", ".join(selected_countries)}'
 )
 
 # Display the chart
 st.altair_chart(chart, use_container_width=True)
+
+
+
+####################### PEAK DETECTION BUTTON ##################################################
+
+new_cases = ['new_cases_per_million',
+             'new_cases_smoothed_per_million',
+             'new_deaths_per_million',
+             'new_deaths_smoothed_per_million'
+
+if selected_type in new_cases:
+    if st.button('Detect Peaks'):
+    # Filter data for first country in selected countries
+        country_data_filtered = country_data[country_data['location'] == selected_countries[0]]
+        
+        # Get peak properties
+        peaks = detect_peaks(country_data_filtered[selected_type].values)
+        
+        # Add peaks to chart
+        peaks_chart = alt.Chart(country_data_filtered.iloc[peaks]).mark_circle(size=100, color='red').encode(
+            x='date:T',
+            y=alt.Y(f'{selected_type}:Q', title='New Cases'),
+            tooltip=['location', 'date', selected_type]
+        )
+        
+        # Display chart with peaks
+        st.altair_chart(chart + peaks_chart, use_container_width=True)
+
+
+###############################################################################################
 
 
