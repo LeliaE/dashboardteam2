@@ -56,6 +56,12 @@ So, you just need to create and enter your virtual environment :
 ```python -m pip install -r requirements.txt```
 
 ### FOR WINDOWS USERS
-*to add* 
+- Open a terminal and go to the directory of your project repository.
+- Inside your project repository, create a virtual environment with the Python venv module:
+``` python3 -m venv [Virtual Environment Name]```
+- Now activate your virtual environment:
+``` .\[Virtual Environment Folder Name]\Scripts\activate```
+- Install dependencies in your virtual environment (activated) with the command:
+```pip install -r requirements.txt```
 
 
