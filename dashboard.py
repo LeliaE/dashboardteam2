@@ -160,7 +160,7 @@ chart = alt.Chart(country_data).mark_line().encode(
 ).properties(
     width=800,
     height=400,
-    title=f'Daily {selected_type.capitalize()} for {", ".join(selected_countries)}'
+    title=f'Daily {choose_name(selected_type)} for {", ".join(selected_countries)}'
 )
 
 # Display the chart
@@ -173,7 +173,7 @@ st.altair_chart(chart, use_container_width=True)
 new_cases = ['new_cases_per_million',
              'new_cases_smoothed_per_million',
              'new_deaths_per_million',
-             'new_deaths_smoothed_per_million'
+             'new_deaths_smoothed_per_million']
 
 if selected_type in new_cases:
     if st.button('Detect Peaks'):
@@ -186,7 +186,7 @@ if selected_type in new_cases:
         # Add peaks to chart
         peaks_chart = alt.Chart(country_data_filtered.iloc[peaks]).mark_circle(size=100, color='red').encode(
             x='date:T',
-            y=alt.Y(f'{selected_type}:Q', title='New Cases'),
+            y=alt.Y(f'{choose_name(selected_type)}:Q', title='New Cases'),
             tooltip=['location', 'date', selected_type]
         )
         
