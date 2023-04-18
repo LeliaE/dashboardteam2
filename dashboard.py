@@ -125,8 +125,6 @@ selected_countries = st.sidebar.multiselect('Select countries:', countries, defa
 # Selecting countries
 country_data = data.loc[(data['location'].isin(selected_countries)) & (data['date'] >= start_date) & (data['date'] <= end_date), ['location', 'date', selected_type]].dropna()
 
-
-
 ############################ PEAK DETECTION ##########################################################
 def detect_peaks(x):
 
@@ -149,8 +147,6 @@ def choose_name(select_type):
         return 'new deaths per million'
     elif select_type == 'new_deaths_smoothed_per_million':
         return 'new deaths smoothed per million'
-
-
 
 # Create the chart
 chart = alt.Chart(country_data).mark_line().encode(
@@ -186,7 +182,7 @@ if selected_type in new_cases:
         # Add peaks to chart
         peaks_chart = alt.Chart(country_data_filtered.iloc[peaks]).mark_circle(size=100, color='red').encode(
             x='date:T',
-            y=alt.Y(f'{choose_name(selected_type)}:Q', title='New Cases'),
+            y=alt.Y(f'{selected_type}:Q'),
             tooltip=['location', 'date', selected_type]
         )
         
@@ -195,5 +191,4 @@ if selected_type in new_cases:
 
 
 ###############################################################################################
-#test
 
