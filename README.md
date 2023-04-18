@@ -1,8 +1,12 @@
 # DASHBOARDTEAM2 : Open Source Project
+
+[![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:830bc682c58fc7d5158d6cd0153bcfaad4ef5b4c/)](https://archive.softwareheritage.org/swh:1:dir:830bc682c58fc7d5158d6cd0153bcfaad4ef5b4c;origin=https://github.com/LeliaE/dashboardteam2;visit=swh:1:snp:22e01c878777317a9c17341f1e92cec7de72bb45;anchor=swh:1:rev:90c84fd309cd250d5547a303e9b8049b275c544c)
+
+
 Team Members:
 Lelia Erscoi, Irina Delamare and Sakshi Sharma
 
-###Project Description:
+### Project Description:
 The 3 of us form team 2 and we are working on creatting an interactive dashboard of covid19 casualties using streamlit for our OpenSource course.
 
 You can check our dashboard with this [link](https://leliae-dashboardteam2-dashboard-6cmp3i.streamlit.app/).
@@ -13,7 +17,7 @@ You can check our dashboard with this [link](https://leliae-dashboardteam2-dashb
 # Data
 The COVID-19 dataset comes from the Our World in Data team from Johns Hopkins University. The data can be found at [owid/covid-19-data](https://github.com/owid/covid-19-data/tree/master/public/data).
 
-###Overview:
+###O verview:
 # Run dashboard localy
 :exclamation: If you havent installed the dependency, go to (add link via summary)
 
@@ -53,47 +57,5 @@ So, you just need to create and enter your virtual environment :
 ## FOR WINDOWS USERS
 *to add* 
 
-
-
-
-
-# CHECKLIST
-
-Here you will find the interactive checklist of all the stuff we implemented:
-
-### Metadata
-- [x] The README.md file is present at the root of the GitHub repo and is in Markdown format.
-- [x] The README.md file states where the data come from (with a link to the original repo).
-- [ ] The README.md file contains guidelines to explicitly install all required dependencies for the project in a virtual environment.
-- [x] The README.md file contains instructions on how to run the dashboard locally.
-- [x] The README.md file contains a link to Streamlit Cloud.
-- [ ] The README.md file contains a Software Heritage button with an active link
-- [x] The LICENSE (or LICENSE.txt) file contains a valid open-source license.
-- [x] The requirements.txt (for pip) file to install all required dependencies.
-- [x] The AUTHORS file contains the list of authors.
-- [ ] The codemeta.json file is present and filled properly.
-
-### Organization
-- [ ] Issues are created to list expected features and report bugs.
-- [ ] Issues are discussed.
-- [ ] Commits address implementation of one feature or fix of one bug at a time.
-- [ ] Commits are (roughly) evenly distributed among project participants.
-- [ ] New features are implemented in branches and merged through pull requests.
-
-### Data
-- [x] Data file is not stored in the repo and is read on the fly with Pandas.
-- [x] A caching mechanism is implemented to prevent downloading the file each time the user interacts with the dashboard.
-
-### Visualization
-- [x] Dashboard displays graphics of Covid-19 cases or deaths vs time for several countries.
-- [ ] Data are normalized with respect to the number of inhabitants per country.
-- [ ] Raw number, cumulative number and the (rolling) average number of cases or deaths could be displayed.
-- [x] The graph has proper axis names with “Date” for the x-axis and a name updated live for the y-axis (for instance “raw cases per million”, “average deaths per million”...) 
-- [ ] Peak (wave) detection is implemented for cumulative number of cases or deaths.
-
-### Interaction
-- [x] User can select which countries to display in the same graphic (among a predefined list of countries).
-- [x] User can select to display Covid-19 cases or deaths.
-- [ ] User can select to display the raw number, cumulative number or the 7-day rolling average.
-- [ ] User can select the time frame to display. Either with a double slider or with 2 date pickers.
-- [ ] User can select to display or not the peak detection (for cumulative numbers only).
+## SUMMARY 
+We have created an interactive dashboard of COVID-19 casualties using Streamlit for our Open Source course. The data used in the dashboard is from the Our World in Data team from Johns Hopkins University. To run the dashboard locally, the user needs to install the dependencies and activate the virtual environment. The project's dependencies are stored in the requirements.txt file, and they can be installed using the pip command.

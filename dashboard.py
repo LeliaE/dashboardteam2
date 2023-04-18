@@ -126,6 +126,7 @@ selected_countries = st.sidebar.multiselect('Select countries:', countries, defa
 country_data = data.loc[(data['location'].isin(selected_countries)) & (data['date'] >= start_date) & (data['date'] <= end_date), ['location', 'date', selected_type]].dropna()
 
 
+
 ############################ PEAK DETECTION ##########################################################
 def detect_peaks(x):
 
@@ -134,10 +135,27 @@ def detect_peaks(x):
 
 ######################################################################################################
 
+
+def choose_name(select_type):
+    if select_type == 'total_cases_per_million':
+        return 'total cases per million'
+    elif select_type == 'new_cases_per_million':
+        return 'new cases per million'
+    elif select_type == 'new_cases_smoothed_per_million':
+        return 'new cases smoothed per million'
+    elif select_type == 'total_deaths_per_million':
+        return 'total deaths per million'
+    elif select_type == 'new_deaths_per_million':
+        return 'new deaths per million'
+    elif select_type == 'new_deaths_smoothed_per_million':
+        return 'new deaths smoothed per million'
+
+
+
 # Create the chart
 chart = alt.Chart(country_data).mark_line().encode(
     x='date:T',
-    y=alt.Y(f'{selected_type}:Q', title='New Cases' if selected_type == 'new_cases' else 'New Deaths'),
+    y=alt.Y( f'{selected_type}:Q', title = choose_name(selected_type)),
     color='location:N'
 ).properties(
     width=800,
@@ -147,6 +165,7 @@ chart = alt.Chart(country_data).mark_line().encode(
 
 # Display the chart
 st.altair_chart(chart, use_container_width=True)
+
 
 
 ####################### PEAK DETECTION BUTTON ##################################################
@@ -176,3 +195,5 @@ if selected_type in new_cases:
 
 
 ###############################################################################################
+
+
