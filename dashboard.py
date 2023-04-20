@@ -11,7 +11,7 @@ from scipy.signal import find_peaks
 from scipy import signal
 
 # Title
-st.title("COVID-19 Data dashboard")
+st.title("COVID-19 Data Dashboard")
 
 # Style
 plt.style.use("dark_background")
@@ -53,7 +53,7 @@ def get_countries(data):
 data = get_data()
 countries = get_countries(data)
 
-
+################# GENERAL FACTS #####################################
 st.subheader("A Few General Facts", anchor=None)
 
 # Date info
@@ -64,35 +64,29 @@ last_day = a.index[-1]
 col1, col2 = st.columns(2)
 with col1:
     st.markdown('**Date**')
-    st.write(f'The first recorded date is: {first_day}')
-    st.write(f'The last recorded date is: {last_day}')
-    st.write(f'Date span: {data.date.min(),data.date.max()}')
+    st.write(f'The first recorded date is: {first_day.date()}')
+    st.write(f'The last recorded date is: {last_day.date()}')
+    
+with col2:
     st.markdown('**Locations**')
-    st.write(f'Number of locations recorded: {data.location.nunique()}')
-
-#with col2:
-#  st.write(f'Locations: how many location has been implemented')
-
+    st.write(f'Number of locations recorded: {len(countries)}')
 
 ################# Data by country ##############################
 
 st.subheader("Data by Country", anchor=None)
 # Create a sidebar with a list of countries and a radio button to choose between new cases and new deaths
-#countries = sorted(data['location'].unique())
-
-# Streamlit sidebar
 st.sidebar.image('https://institutducerveau-icm.org/wp-content/uploads/2020/10/coronavirus-covid-19-e1603461789898-830x483.jpg', width=300)
 
-
-visualisation_type = {'Total confirmed cases of COVID-19': 'total_cases_per_million', 
-                    'New confirmed cases of COVID-19': 'new_cases_per_million', 
-                    'New confirmed cases of COVID-19': 'new_cases_smoothed_per_million', 
-                    'Total deaths attributed to COVID-19': 'total_deaths_per_million', 
-                    'New deaths attributed to COVID-19': 'new_deaths_per_million', 
-                    'New deaths attributed to COVID-19 (7-day smoothed)': 'new_deaths_smoothed_per_million'}
+visualisation_type = {
+                    'New confirmed cases': 'new_cases_per_million', 
+                    'New confirmed cases (7-day smoothed)': 'new_cases_smoothed_per_million', 
+                    'Total confirmed cases': 'total_cases_per_million', 
+                    'New deaths': 'new_deaths_per_million', 
+                    'New deaths (7-day smoothed)': 'new_deaths_smoothed_per_million',
+                    'Total deaths': 'total_deaths_per_million' }
 
 # Selecting dashboard type
-select_dashboard_type = st.sidebar.radio('Choose What type of visualisation you want for the dashboard per 1,000,000 people:', visualisation_type.keys())   
+select_dashboard_type = st.sidebar.radio('Choose the type of COVID-19 data visualisation (per 1,000,000 people):', visualisation_type.keys())   
 selected_type = visualisation_type[select_dashboard_type]
 
 ###################### DATE ########################################
@@ -119,12 +113,7 @@ st.write('Selected dates:', start_date, end_date)
 
 # Selecting countries
 selected_countries = st.sidebar.multiselect('Select countries:', countries, default=['United States', 'India', 'France'])
-#country_data = data[data['location'].isin(selected_countries)]
-#country_data = data[(data['location'].isin(selected_countries))][['location', 'date', selected_type]].dropna()
-
-# Selecting countries
 country_data = data.loc[(data['location'].isin(selected_countries)) & (data['date'] >= start_date) & (data['date'] <= end_date), ['location', 'date', selected_type]].dropna()
-
 
 ############################ PEAK DETECTION ##########################################################
 def detect_peaks(x):
@@ -164,7 +153,6 @@ chart = alt.Chart(country_data).mark_line().encode(
 # Display the chart
 st.altair_chart(chart, use_container_width=True)
 
-
 ####################### PEAK DETECTION BUTTON ##################################################
 
 new_cases = ['new_cases_per_million',
@@ -189,6 +177,5 @@ if selected_type in new_cases:
         
         # Display chart with peaks
         st.altair_chart(chart + peaks_chart, use_container_width=True)
-
 
 ###############################################################################################
