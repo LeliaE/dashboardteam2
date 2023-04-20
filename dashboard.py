@@ -84,15 +84,15 @@ st.subheader("Data by Country", anchor=None)
 st.sidebar.image('https://institutducerveau-icm.org/wp-content/uploads/2020/10/coronavirus-covid-19-e1603461789898-830x483.jpg', width=300)
 
 
-visualisation_type = {'Total confirmed cases of COVID-19 per 1,000,000 people': 'total_cases_per_million', 
-                    'New confirmed cases of COVID-19 per 1,000,000 people': 'new_cases_per_million', 
-                    'New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people': 'new_cases_smoothed_per_million', 
-                    'Total deaths attributed to COVID-19 per 1,000,000 people': 'total_deaths_per_million', 
-                    'New deaths attributed to COVID-19 per 1,000,000 people': 'new_deaths_per_million', 
-                    'New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people': 'new_deaths_smoothed_per_million'}
+visualisation_type = {'Total confirmed cases of COVID-19': 'total_cases_per_million', 
+                    'New confirmed cases of COVID-19': 'new_cases_per_million', 
+                    'New confirmed cases of COVID-19': 'new_cases_smoothed_per_million', 
+                    'Total deaths attributed to COVID-19': 'total_deaths_per_million', 
+                    'New deaths attributed to COVID-19': 'new_deaths_per_million', 
+                    'New deaths attributed to COVID-19 (7-day smoothed)': 'new_deaths_smoothed_per_million'}
 
 # Selecting dashboard type
-select_dashboard_type = st.sidebar.radio('Choose What type of visualisation you want for the dashboard :', visualisation_type.keys())   
+select_dashboard_type = st.sidebar.radio('Choose What type of visualisation you want for the dashboard per 1,000,000 people:', visualisation_type.keys())   
 selected_type = visualisation_type[select_dashboard_type]
 
 ###################### DATE ########################################
@@ -125,6 +125,7 @@ selected_countries = st.sidebar.multiselect('Select countries:', countries, defa
 # Selecting countries
 country_data = data.loc[(data['location'].isin(selected_countries)) & (data['date'] >= start_date) & (data['date'] <= end_date), ['location', 'date', selected_type]].dropna()
 
+
 ############################ PEAK DETECTION ##########################################################
 def detect_peaks(x):
 
@@ -151,17 +152,17 @@ def choose_name(select_type):
 # Create the chart
 chart = alt.Chart(country_data).mark_line().encode(
     x='date:T',
-    y=alt.Y( f'{selected_type}:Q', title = choose_name(selected_type)),
+    y=alt.Y(f'{selected_type}:Q', title='New Cases' if selected_type == 'new_cases' else 'New Deaths'),
     color='location:N'
 ).properties(
     width=800,
     height=400,
-    title=f'Daily {choose_name(selected_type)} for {", ".join(selected_countries)}'
+    title=f'Daily {choose_name(selected_type).capitalize()}'
+    
 )
 
 # Display the chart
 st.altair_chart(chart, use_container_width=True)
-
 
 
 ####################### PEAK DETECTION BUTTON ##################################################
@@ -191,4 +192,3 @@ if selected_type in new_cases:
 
 
 ###############################################################################################
-
