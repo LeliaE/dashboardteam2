@@ -6,19 +6,20 @@
 Team Members:
 Lelia Erscoi, Irina Delamare and Sakshi Sharma
 
-### Project Description:
-The 3 of us form team 2 and we are working on creatting an interactive dashboard of covid19 casualties using streamlit for our OpenSource course.
+## Project Description:
+The 3 of us form team 2 and we are working on creatting an interactive dashboard of covid19 cases and casualties using streamlit for our OpenSource course.
 
 You can check our dashboard with this [link](https://leliae-dashboardteam2-dashboard-6cmp3i.streamlit.app/).
 
-*WE NEED A SUMMARY*
+## SUMMARY 
+We have created an interactive dashboard of COVID-19 cases and casualties using Streamlit for our Open Source course. The data used in the dashboard is from the Our World in Data team from Johns Hopkins University. To run the dashboard locally, the user needs to install the dependencies and activate the virtual environment. The project's dependencies are stored in the requirements.txt file, and they can be installed using the pip command.
 
 
-# Data
+## Data
 The COVID-19 dataset comes from the Our World in Data team from Johns Hopkins University. The data can be found at [owid/covid-19-data](https://github.com/owid/covid-19-data/tree/master/public/data).
 
-###O verview:
-# Run dashboard localy
+## Overview:
+### Run dashboard localy
 :exclamation: If you havent installed the dependency, go to (add link via summary)
 
 In the terminal, navigate to the project. Here, the project is stored in the folder Documents, inside the folder git. 
@@ -36,7 +37,7 @@ USER:~/Documents/git/dashboardteam2$ streamlit run dashboard.py
 In case of issues, you might need to reinstall dependencies in your virtual environment with the command:
 ```python -m pip install -r requirements.txt``` 
 
-# Install Dependencies
+### Install Dependencies
 First, you will need to **Install dependencies you need for your project:**
 We are using Streamlit, a free and open-source framework to rapidly build and share beautiful machine learning and data science web apps. 
 
@@ -54,8 +55,13 @@ So, you just need to create and enter your virtual environment :
 - Install dependencies in your virtual environment (activated) with the command:
 ```python -m pip install -r requirements.txt```
 
-## FOR WINDOWS USERS
-*to add* 
+### FOR WINDOWS USERS
+- Open a terminal and go to the directory of your project repository.
+- Inside your project repository, create a virtual environment with the Python venv module:
+``` python3 -m venv [Virtual Environment Name]```
+- Now activate your virtual environment:
+``` .\[Virtual Environment Folder Name]\Scripts\activate```
+- Install dependencies in your virtual environment (activated) with the command:
+```pip install -r requirements.txt```
 
-## SUMMARY 
-We have created an interactive dashboard of COVID-19 casualties using Streamlit for our Open Source course. The data used in the dashboard is from the Our World in Data team from Johns Hopkins University. To run the dashboard locally, the user needs to install the dependencies and activate the virtual environment. The project's dependencies are stored in the requirements.txt file, and they can be installed using the pip command.
+
