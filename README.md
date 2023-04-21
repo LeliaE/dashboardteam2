@@ -20,7 +20,7 @@ The COVID-19 dataset comes from the Our World in Data team from Johns Hopkins Un
 
 ## Overview:
 ### Run dashboard localy
-:exclamation: If you havent installed the dependency, go to (add link via summary)
+:exclamation: If you havent installed the dependency, go to the next section and come back!
 
 In the terminal, navigate to the project. Here, the project is stored in the folder Documents, inside the folder git. 
 ```bash
