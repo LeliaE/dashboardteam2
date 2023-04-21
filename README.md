@@ -45,7 +45,7 @@ You need to install the required dependencies in a dedicated Python virtual envi
 To understand a bit what we are doing, we are using the file requirements.txt to store all the dependencies we wish our environment runs on. This is done to ensure that you will be able to run our dashboard even if we stop updating it.
 
 So, you just need to create and enter your virtual environment :
-## FOR LINUX AND MACos USERS
+#### FOR LINUX AND MACos USERS
 - Open a terminal and go to the directory of your project repository.
 - Inside your project repository, create a virtual environment with the Python venv module:
 ``` python -m venv env ```
@@ -55,7 +55,7 @@ So, you just need to create and enter your virtual environment :
 - Install dependencies in your virtual environment (activated) with the command:
 ```python -m pip install -r requirements.txt```
 
-### FOR WINDOWS USERS
+#### FOR WINDOWS USERS
 - Open a terminal and go to the directory of your project repository.
 - Inside your project repository, create a virtual environment with the Python venv module:
 ``` python3 -m venv [Virtual Environment Name]```
