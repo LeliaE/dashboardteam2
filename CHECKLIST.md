@@ -16,7 +16,7 @@ Here you will find the interactive checklist of all the stuff we implemented:
 
 ### Organization
 - [x] Issues are created to list expected features and report bugs.
-- [ ] Issues are discussed.
+- [x] Issues are discussed.
 - [x] Commits address implementation of one feature or fix of one bug at a time.
 - [ ] Commits are (roughly) evenly distributed among project participants.
 - [x] New features are implemented in branches and merged through pull requests.
